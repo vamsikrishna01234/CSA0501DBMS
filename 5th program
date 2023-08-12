@@ -1,0 +1,223 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cse                |
+| gb                 |
+| information_schema |
+| loki               |
+| mysql              |
+| performance_schema |
+| ravi               |
+| sai                |
+| suraaj             |
+| sys                |
++--------------------+
+10 rows in set (0.01 sec)
+
+mysql> use gb;
+Database changed
+mysql> desc gb;
+ERROR 1146 (42S02): Table 'gb.gb' doesn't exist
+mysql> show tables;
++--------------+
+| Tables_in_gb |
++--------------+
+| student      |
++--------------+
+1 row in set (0.04 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(40) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | goa     |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student values(136,'gopi','manglore',95475);commit;
+Query OK, 1 row affected (0.03 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+----------+--------+
+| id   | name   | city     | salary |
++------+--------+----------+--------+
+|   11 | lokesh | chennai  |   1234 |
+|   12 | mani   | goa      |   6541 |
+|   13 | sai    | ongole   |   9874 |
+|   18 | loks   | chennai  |    234 |
+|   16 | mani   | goa      |    541 |
+|   14 | ramu   | ongole   |    874 |
+|  136 | gopi   | manglore |  95475 |
++------+--------+----------+--------+
+7 rows in set (0.00 sec)
+
+mysql> delete from gb where id=136;commit;
+ERROR 1146 (42S02): Table 'gb.gb' doesn't exist
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from gb where id=136 commit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'commit' at line 1
+mysql> delete from student where id=136 commit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'commit' at line 1
+mysql> delete from gopi where id=136 commit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'commit' at line 1
+mysql> delete from student table where id=136;commit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table where id=136' at line 1
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+----------+--------+
+| id   | name   | city     | salary |
++------+--------+----------+--------+
+|   11 | lokesh | chennai  |   1234 |
+|   12 | mani   | goa      |   6541 |
+|   13 | sai    | ongole   |   9874 |
+|   18 | loks   | chennai  |    234 |
+|   16 | mani   | goa      |    541 |
+|   14 | ramu   | ongole   |    874 |
+|  136 | gopi   | manglore |  95475 |
++------+--------+----------+--------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+  
+mysql> delete from student where id=136;commit;
+Query OK, 1 row affected (0.03 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | goa     |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update student set city='vizag'where name='mani';
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | vizag   |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update student set city='vizag'where id=16;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update student set city='goa'where id=12;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select name,salary from student;commit;
++--------+--------+
+| name   | salary |
++--------+--------+
+| lokesh |   1234 |
+| mani   |   6541 |
+| sai    |   9874 |
+| loks   |    234 |
+| mani   |    541 |
+| ramu   |    874 |
++--------+--------+
+6 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | ongole  |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update student set city='araku'where name='ramu';rollback;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql>
