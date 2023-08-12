@@ -1,0 +1,139 @@
+mysql> use gb;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_gb |
++--------------+
+| cbn          |
+| log          |
+| ruler        |
+| student      |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | venky  | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student modify id int primary key;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(40) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student modify id int auto increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto increment' at line 1
+mysql> alter table student modify id int auto_increment;
+Query OK, 8 rows affected (0.06 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
+| city   | varchar(40) | YES  |     | NULL    |                |
+| salary | int         | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student(name,city) values('bsr',3652);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++----+--------+---------+--------+
+| id | name   | city    | salary |
++----+--------+---------+--------+
+| 11 | lokesh | chennai |   1234 |
+| 12 | mani   | goa     |   6541 |
+| 13 | sai    | ongole  |   9874 |
+| 14 | venky  | araku   |    874 |
+| 18 | loks   | chennai |    234 |
+| 36 | swetha | chirala |  65743 |
+| 45 | janu   | chirala |  65743 |
+| 63 | venky  | chirala |  65743 |
+| 64 | bsr    | 3652    |   NULL |
++----+--------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> create view view1 as select name from student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from view1;
++--------+
+| name   |
++--------+
+| lokesh |
+| mani   |
+| sai    |
+| venky  |
+| loks   |
+| swetha |
+| janu   |
+| venky  |
+| bsr    |
++--------+
+9 rows in set (0.00 sec)
+
+mysql> create view view2 as select * from student where city='chirala';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from view2;
++----+--------+---------+--------+
+| id | name   | city    | salary |
++----+--------+---------+--------+
+| 36 | swetha | chirala |  65743 |
+| 45 | janu   | chirala |  65743 |
+| 63 | venky  | chirala |  65743 |
++----+--------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> create unique index stud_index on student(id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from student;
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| student |          0 | PRIMARY    |            1 | id          | A         |           8 |     NULL |   NULL |      | BTREE      |         |
+ | YES     | NULL       |
+| student |          0 | stud_index |            1 | id          | A         |           9 |     NULL |   NULL |      | BTREE      |         |
+ | YES     | NULL       |
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.03 sec)
+
+mysql> drop index stud_index on student;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from student;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| student |          0 | PRIMARY  |            1 | id          | A         |           8 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql>
