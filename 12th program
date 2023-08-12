@@ -1,0 +1,232 @@
+mysql> select * from student;
++----+--------+---------+--------+
+| id | name   | city    | salary |
++----+--------+---------+--------+
+| 11 | lokesh | chennai |   1234 |
+| 12 | mani   | goa     |   6541 |
+| 13 | sai    | ongole  |   9874 |
+| 14 | venky  | araku   |    874 |
+| 18 | loks   | chennai |    234 |
+| 36 | swetha | chirala |  65743 |
+| 45 | janu   | chirala |  65743 |
+| 63 | venky  | chirala |  65743 |
+| 64 | bsr    | 3652    |   NULL |
++----+--------+---------+--------+
+9 rows in set (0.05 sec)
+
+mysql> select
+    -> id,name,city,salary
+    -> from
+    -> student
+    -> order by student;
+ERROR 1054 (42S22): Unknown column 'student' in 'order clause'
+mysql> select
+    -> id,name,city,salary
+    -> from
+    -> student
+    -> orderby student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student' at line 5
+mysql> select
+    -> id,name,city,salary
+    -> from
+    -> student
+    -> orderby name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name' at line 5
+mysql> select
+    -> id,name,city,salary
+    -> from
+    -> student
+    -> order by name;
++----+--------+---------+--------+
+| id | name   | city    | salary |
++----+--------+---------+--------+
+| 64 | bsr    | 3652    |   NULL |
+| 45 | janu   | chirala |  65743 |
+| 11 | lokesh | chennai |   1234 |
+| 18 | loks   | chennai |    234 |
+| 12 | mani   | goa     |   6541 |
+| 13 | sai    | ongole  |   9874 |
+| 36 | swetha | chirala |  65743 |
+| 14 | venky  | araku   |    874 |
+| 63 | venky  | chirala |  65743 |
++----+--------+---------+--------+
+9 rows in set (0.02 sec)
+
+mysql> delimiter $$
+mysql> create procedure getstudent()
+    -> begin
+    -> select
+    -> name,salary,id
+    -> from
+    -> student
+    -> order by name;
+    -> end$$
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> call getstudent;
+    -> ^C
+mysql> delimiter
+ERROR:
+DELIMITER must be followed by a 'delimiter' character or string
+mysql> delimiter ;
+mysql> call getstudent;
++--------+--------+----+
+| name   | salary | id |
++--------+--------+----+
+| bsr    |   NULL | 64 |
+| janu   |  65743 | 45 |
+| lokesh |   1234 | 11 |
+| loks   |    234 | 18 |
+| mani   |   6541 | 12 |
+| sai    |   9874 | 13 |
+| swetha |  65743 | 36 |
+| venky  |    874 | 14 |
+| venky  |  65743 | 63 |
++--------+--------+----+
+9 rows in set (0.03 sec)
+
+
+mysql> select * from student;
++----+--------+---------+--------+
+| id | name   | city    | salary |
++----+--------+---------+--------+
+| 11 | lokesh | chennai |   1234 |
+| 12 | mani   | goa     |   6541 |
+| 13 | sai    | ongole  |   9874 |
+| 14 | venky  | araku   |    874 |
+| 18 | loks   | chennai |    234 |
+| 36 | swetha | chirala |  65743 |
+| 45 | janu   | chirala |  65743 |
+| 63 | venky  | chirala |  65743 |
+| 64 | bsr    | 3652    |   NULL |
++----+--------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select * from log;
+Empty set (0.04 sec)
+
+mysql> select * from cbn;
++----+---------+-------+
+| id | name    | phnno |
++----+---------+-------+
+| 26 | john    | 74592 |
+| 41 | pondu   | 96325 |
+| 61 | vasanth |  NULL |
++----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> delimiter $$
+mysql> create procedure getcbn()
+    -> begin
+    -> select name from cbn;
+    -> end$$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter;
+    -> call getcbn;
+    -> ^C
+mysql> delimiter ;
+mysql> call getcbn;
++---------+
+| name    |
++---------+
+| john    |
+| pondu   |
+| vasanth |
++---------+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> create procedure getstudent()
+    -> begin
+    -> select *from student where salary>1500;
+    -> select count(id)as total_student from student;
+    -> end$$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+mysql> call getstudent;
++------+--------+-------+
+| id   | salary | name  |
++------+--------+-------+
+|   58 |   7621 | kanth |
+|  165 |   9632 | quiz  |
++------+--------+-------+
+2 rows in set (0.02 sec)
+
++---------------+
+| total_student |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.03 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+
+
+
+mysql> select*from renu;
++---------+------+--------+
+| name    | id   | salary |
++---------+------+--------+
+| bharath |   74 |   1234 |
+| krish   |   52 |   6523 |
+| kumar   |   34 |   7619 |
+| siva    |    2 |   6573 |
++---------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create procedure getrenu(in var1 int)
+    -> begin
+    -> select * from renu limit var1;
+    -> select count(id)as total_student from renu;
+    -> end$$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+mysql> call getrenu(2);
++---------+------+--------+
+| name    | id   | salary |
++---------+------+--------+
+| bharath |   74 |   1234 |
+| krish   |   52 |   6523 |
++---------+------+--------+
+2 rows in set (0.02 sec)
+
++---------------+
+| total_student |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.03 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;
+mysql> call getrenu(4);
++---------+------+--------+
+| name    | id   | salary |
++---------+------+--------+
+| bharath |   74 |   1234 |
+| krish   |   52 |   6523 |
+| kumar   |   34 |   7619 |
+| siva    |    2 |   6573 |
++---------+------+--------+
+4 rows in set (0.00 sec)
+
++---------------+
+| total_student |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+mysql> call getrenu;
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE krishna.getrenu; expected 1, got 0
