@@ -1,0 +1,101 @@
+mysql> create table etv(id int,name varchar(89),salary int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into etv values(12,'raji',6321);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from etv;
++------+------+--------+
+| id   | name | salary |
++------+------+--------+
+|   12 | raji |   6321 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into etv values(14,'mani',326587);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select name from student inner join etv on student.name = etv.name;
+ERROR 1052 (23000): Column 'name' in field list is ambiguous
+mysql> select * from student inner join etv on student.name=etv.name;
++----+------+------+--------+------+------+--------+
+| id | name | city | salary | id   | name | salary |
++----+------+------+--------+------+------+--------+
+| 12 | mani | goa  |   6541 |   14 | mani | 326587 |
++----+------+------+--------+------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student left join etv on student.name=etv.name;
++----+--------+---------+--------+------+------+--------+
+| id | name   | city    | salary | id   | name | salary |
++----+--------+---------+--------+------+------+--------+
+| 11 | lokesh | chennai |   1234 | NULL | NULL |   NULL |
+| 12 | mani   | goa     |   6541 |   14 | mani | 326587 |
+| 13 | sai    | ongole  |   9874 | NULL | NULL |   NULL |
+| 14 | venky  | araku   |    874 | NULL | NULL |   NULL |
+| 18 | loks   | chennai |    234 | NULL | NULL |   NULL |
+| 36 | swetha | chirala |  65743 | NULL | NULL |   NULL |
+| 45 | janu   | chirala |  65743 | NULL | NULL |   NULL |
+| 63 | venky  | chirala |  65743 | NULL | NULL |   NULL |
+| 64 | bsr    | 3652    |   NULL | NULL | NULL |   NULL |
++----+--------+---------+--------+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select * from student right join etv on student.name=etv.name;
++------+------+------+--------+------+------+--------+
+| id   | name | city | salary | id   | name | salary |
++------+------+------+--------+------+------+--------+
+| NULL | NULL | NULL |   NULL |   12 | raji |   6321 |
+|   12 | mani | goa  |   6541 |   14 | mani | 326587 |
++------+------+------+--------+------+------+--------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> insert into def values(96,'prashanth',654),(63,'jain',745);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from def;
++------+-----------+--------+
+| id   | name      | salary |
++------+-----------+--------+
+|   96 | prashanth |    654 |
+|   63 | jain      |    745 |
++------+-----------+--------+
+2 rows in set (0.00 sec)
+mysql> create table oil(id int,name varchar(72));
+Query OK, 0 rows affected (0.04 sec)
+mysql> desc oil;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(72) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into oil values(63,'ps',632);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into oil values(32,'rfg');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into oil values(63,'mnb');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from oil;
++------+------+
+| id   | name |
++------+------+
+|   32 | rfg  |
+|   63 | mnb  |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from def,oil
+    -> where def.id=oil.id;
++------+------+--------+------+------+
+| id   | name | salary | id   | name |
++------+------+--------+------+------+
+|   63 | jain |    745 |   63 | mnb  |
++------+------+--------+------+------+
