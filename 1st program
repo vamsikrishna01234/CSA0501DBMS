@@ -1,0 +1,102 @@
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> create database loki;
+ERROR 1007 (HY000): Can't create database 'loki'; database exists
+mysql> use loki;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_loki |
++----------------+
+| siva           |
++----------------+
+1 row in set (0.07 sec)
+
+mysql> select*from siva;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.03 sec)
+
+mysql> select*from siva order by branch;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   345 | kumar | physics   | goa     |
+|   123 | lucky | chemistry | nellore |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.03 sec)
+
+mysql> select*from siva order by sl_no;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva order by sl_no desc;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   678 | ram   | telugu    | ongole  |
+|   345 | kumar | physics   | goa     |
+|   123 | lucky | chemistry | nellore |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select sl_no,name
+    -> from siva
+    -> where name IN(select name from siva where subject='chemistry');
++-------+-------+
+| sl_no | name  |
++-------+-------+
+|   123 | lucky |
++-------+-------+
+1 row in set (0.03 sec)
+
+mysql> select*from siva;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> create table gopi
+    -> id int(3),
+    -> name char(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id int(3),
+name char(20))' at line 2
+mysql> create table gopi
+    -> (id int(3),
+    -> name char(20));
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> desc gopi;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| id    | int      | YES  |     | NULL    |       |
+| name  | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.03 sec)
