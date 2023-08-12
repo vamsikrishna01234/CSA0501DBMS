@@ -1,0 +1,255 @@
+mysql> use gb;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(40) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
++------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student values(63,'joy','chirala',65743);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
++------+--------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into student values(45,'janu','chirala',65743);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into student values(76,'varshu','chirala',65743);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   76 | varshu | chirala |  65743 |
++------+--------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+SAVEPOINT:
+
+mysql>
+mysql> start transactions;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transactions' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint initial;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into student values(36,'swetha','chirala',65743);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | joy    | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> update student set name='venky' where id=63;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   16 | mani   | vizag   |    541 |
+|   14 | ramu   | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+9 rows in set (0.00 sec)
+
+mysql> delete from student where id=16;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint del;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | ramu   | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> update student set name='venky' where id=14;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint upd;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | venky  | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> delete from student where id=63;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint del;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | venky  | araku   |    874 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> rollback to upd;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | venky  | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
