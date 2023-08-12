@@ -1,0 +1,568 @@
+mysql> use cvb;
+Database changed
+mysql> create table asd(name varchar(12),id int,salary int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc asd;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table add branch varchar(34);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add branch varchar(34)' at line 1
+mysql> alter table asd add branch varchar(34);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc asd;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| branch | varchar(34) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table asd modify column branch varchar(55);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc asd;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| branch | varchar(55) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> rename table asd to dsa;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc dsa;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| branch | varchar(55) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table dsa rename column branch to city;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc dsa;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| city   | varchar(55) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table dsa drop column branch;
+ERROR 1091 (42000): Can't DROP 'branch'; check that column/key exists
+mysql> alter table dsa drop column city;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc dsa;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(12) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into dsa values('renu',12,3698),('reedy',32,7412);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into dsa values('joy',75,3498),('ram',74,7463);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select*from dsa;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update dsa set 12 to 65 where name=renu;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '12 to 65 where name=renu' at line 1
+mysql> update dsa set id=65 where name=renu;
+ERROR 1054 (42S22): Unknown column 'renu' in 'where clause'
+mysql> update table dsa set id=65 where name=renu;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table dsa set id=65 where name=renu' at line 1
+mysql> update dsa set id=65 where name='renu';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from dsa;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   65 |   3698 |
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> delete from dsa where id=32;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select*from dsa;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   65 |   3698 |
+| joy  |   75 |   3498 |
+| ram  |   74 |   7463 |
++------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update dsa set id=43 where name='ram';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from dsa;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   65 |   3698 |
+| joy  |   75 |   3498 |
+| ram  |   43 |   7463 |
++------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> delete from dsa where id=75;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select*from dsa;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   65 |   3698 |
+| ram  |   43 |   7463 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from dsa;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   65 |   3698 |
+| ram  |   43 |   7463 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select name,id from dsa;
++------+------+
+| name | id   |
++------+------+
+| renu |   65 |
+| ram  |   43 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table dsa;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select*from dsa;
+Empty set (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_cvb |
++---------------+
+| dsa           |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> drop table dsa;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table reg(name varchar(12),id int,salary int);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into dsa values('renu',12,3698),('reedy',32,7412);
+ERROR 1146 (42S02): Table 'cvb.dsa' doesn't exist
+mysql> insert into dsa values('joy',75,3498),('ram',74,7463);
+ERROR 1146 (42S02): Table 'cvb.dsa' doesn't exist
+mysql> select*from reg;
+Empty set (0.00 sec)
+
+mysql> insert into reg values('renu',12,3698),('reedy',32,7412);
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into reg values('joy',75,3498),('ram',74,7463);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select*from reg;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select*from reg where gender='male';
+ERROR 1054 (42S22): Unknown column 'gender' in 'where clause'
+mysql> select*from reg where id>=50;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| joy  |   75 |   3498 |
+| ram  |   74 |   7463 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select*from reg where id between 10 and 74;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+3 rows in set (0.04 sec)
+
+mysql> select * from reg where id between 40 and 90;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| joy  |   75 |   3498 |
+| ram  |   74 |   7463 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from reg where salary between 4000 and 10000;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| reedy |   32 |   7412 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select id,salary,salary*0.5 from reg;
++------+--------+------------+
+| id   | salary | salary*0.5 |
++------+--------+------------+
+|   12 |   3698 |     1849.0 |
+|   32 |   7412 |     3706.0 |
+|   75 |   3498 |     1749.0 |
+|   74 |   7463 |     3731.5 |
++------+--------+------------+
+4 rows in set (0.04 sec)
+
+mysql> select id,salary,salary+1000 from reg;
++------+--------+-------------+
+| id   | salary | salary+1000 |
++------+--------+-------------+
+|   12 |   3698 |        4698 |
+|   32 |   7412 |        8412 |
+|   75 |   3498 |        4498 |
+|   74 |   7463 |        8463 |
++------+--------+-------------+
+4 rows in set (0.04 sec)
+
+mysql> select id,salary,salary+1000 as new salary from reg;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary from reg' at line 1
+mysql> select id,salary,salary+1000 as newsalary from reg;
++------+--------+-----------+
+| id   | salary | newsalary |
++------+--------+-----------+
+|   12 |   3698 |      4698 |
+|   32 |   7412 |      8412 |
+|   75 |   3498 |      4498 |
+|   74 |   7463 |      8463 |
++------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'%r';
+Empty set (0.04 sec)
+
+mysql>  select *from reg where name like'%y';
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'r%';
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'%r%';
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'%e%';
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'r___%'
+    -> ^C
+mysql>  select *from reg where name like'r___%';
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  select *from reg where name like'r__u%';
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   12 |   3698 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  select *from reg where name like'___u%';
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   12 |   3698 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  select *from reg where name like'____u%';
+Empty set (0.00 sec)
+
+mysql>  select *from reg where name like'_o_%';
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| joy  |   75 |   3498 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  select *from reg where id between 10 and 60;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  select *from reg where id not between 10 and 60;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| joy  |   75 |   3498 |
+| ram  |   74 |   7463 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select count(name) from reg;
++-------------+
+| count(name) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(id) from reg;
++---------+
+| min(id) |
++---------+
+|      12 |
++---------+
+1 row in set (0.04 sec)
+
+mysql> select max(id) from reg;
++---------+
+| max(id) |
++---------+
+|      75 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select avg(id) from reg;
++---------+
+| avg(id) |
++---------+
+| 48.2500 |
++---------+
+1 row in set (0.04 sec)
+
+mysql> select sum(id) from reg;
++---------+
+| sum(id) |
++---------+
+|     193 |
++---------+
+1 row in set (0.00 sec)
+
+mysql>  select*from reg;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
++-------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into reg values(lambu,18,4563);
+ERROR 1054 (42S22): Unknown column 'lambu' in 'field list'
+mysql> insert into reg values('lambu',18,4563);
+Query OK, 1 row affected (0.04 sec)
+
+mysql>  select*from reg;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| reedy |   32 |   7412 |
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
+| lambu |   18 |   4563 |
++-------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  select*from reg order by id;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| renu  |   12 |   3698 |
+| lambu |   18 |   4563 |
+| reedy |   32 |   7412 |
+| ram   |   74 |   7463 |
+| joy   |   75 |   3498 |
++-------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  select*from reg order by id desc;
++-------+------+--------+
+| name  | id   | salary |
++-------+------+--------+
+| joy   |   75 |   3498 |
+| ram   |   74 |   7463 |
+| reedy |   32 |   7412 |
+| lambu |   18 |   4563 |
+| renu  |   12 |   3698 |
++-------+------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  select*from reg group by id;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'cvb.reg.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select * from dsa where salary=3698;
+ERROR 1146 (42S02): Table 'cvb.dsa' doesn't exist
+mysql> select * from reg where salary=3698;
++------+------+--------+
+| name | id   | salary |
++------+------+--------+
+| renu |   12 |   3698 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  select*from reg groupby id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id' at line 1
+mysql>  select from reg groupby id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from reg groupby id' at line 1
+mysql>
+
+mysql> select id from reg group by id;
++------+
+| id   |
++------+
+|   12 |
+|   32 |
+|   75 |
+|   74 |
+|   18 |
++------+
+5 rows in set (0.03 sec)
+
+mysql> select id from reg group by id order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select id from reg group by id order by id desc;
++------+
+| id   |
++------+
+|   75 |
+|   74 |
+|   32 |
+|   18 |
+|   12 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> select id from reg group by id order by id;
++------+
+| id   |
++------+
+|   12 |
+|   18 |
+|   32 |
+|   74 |
+|   75 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> select id from reg group by id having id>50;
++------+
+| id   |
++------+
+|   75 |
+|   74 |
++------+
+2 rows in set (0.00 sec)
