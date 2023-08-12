@@ -1,0 +1,107 @@
+mysql> insert into student values(12,'mani',123,'chennai',5410);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------+------+---------+---------+------+
+| id   | name | phoneno | address | fees |
++------+------+---------+---------+------+
+|   12 | mani |     123 | chennai | 5410 |
++------+------+---------+---------+------+
+1 row in set (0.02 sec)
+
+mysql> insert into student values(11,'sai',1323,'chennai',5460),(13,'lokesh',456,'goa',56321);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+---------+-------+
+| id   | name   | phoneno | address | fees  |
++------+--------+---------+---------+-------+
+|   12 | mani   |     123 | chennai |  5410 |
+|   11 | sai    |    1323 | chennai |  5460 |
+|   13 | lokesh |     456 | goa     | 56321 |
++------+--------+---------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student values(15,'sam',13234,'banglore',460),(14,'hari',453,'goa',5621);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+----------+-------+
+| id   | name   | phoneno | address  | fees  |
++------+--------+---------+----------+-------+
+|   12 | mani   |     123 | chennai  |  5410 |
+|   11 | sai    |    1323 | chennai  |  5460 |
+|   13 | lokesh |     456 | goa      | 56321 |
+|   15 | sam    |   13234 | banglore |   460 |
+|   14 | hari   |     453 | goa      |  5621 |
++------+--------+---------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set fees=50000 where id=14;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+----------+-------+
+| id   | name   | phoneno | address  | fees  |
++------+--------+---------+----------+-------+
+|   12 | mani   |     123 | chennai  |  5410 |
+|   11 | sai    |    1323 | chennai  |  5460 |
+|   13 | lokesh |     456 | goa      | 56321 |
+|   15 | sam    |   13234 | banglore |   460 |
+|   14 | hari   |     453 | goa      | 50000 |
++------+--------+---------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set phoneno=9632 where name=lokesh;
+ERROR 1054 (42S22): Unknown column 'lokesh' in 'where clause'
+mysql> update student set phoneno=9632 where name='lokesh';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+--------+---------+----------+-------+
+| id   | name   | phoneno | address  | fees  |
++------+--------+---------+----------+-------+
+|   12 | mani   |     123 | chennai  |  5410 |
+|   11 | sai    |    1323 | chennai  |  5460 |
+|   13 | lokesh |    9632 | goa      | 56321 |
+|   15 | sam    |   13234 | banglore |   460 |
+|   14 | hari   |     453 | goa      | 50000 |
++------+--------+---------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values(127,'telapolu',7532,'ongole',9658);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------+----------+---------+----------+-------+
+| id   | name     | phoneno | address  | fees  |
++------+----------+---------+----------+-------+
+|   12 | mani     |     123 | chennai  |  5410 |
+|   11 | sai      |    1323 | chennai  |  5460 |
+|   13 | lokesh   |    9632 | goa      | 56321 |
+|   15 | sam      |   13234 | banglore |   460 |
+|   14 | hari     |     453 | goa      | 50000 |
+|  127 | telapolu |    7532 | ongole   |  9658 |
++------+----------+---------+----------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student where id=127;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------+--------+---------+----------+-------+
+| id   | name   | phoneno | address  | fees  |
++------+--------+---------+----------+-------+
+|   12 | mani   |     123 | chennai  |  5410 |
+|   11 | sai    |    1323 | chennai  |  5460 |
+|   13 | lokesh |    9632 | goa      | 56321 |
+|   15 | sam    |   13234 | banglore |   460 |
+|   14 | hari   |     453 | goa      | 50000 |
++------+--------+---------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
