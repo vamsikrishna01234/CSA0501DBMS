@@ -1,0 +1,222 @@
+mysql> use gb;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_gb |
++--------------+
+| cbn          |
+| def          |
+| etv          |
+| log          |
+| oil          |
+| ruler        |
+| student      |
+| view1        |
+| view2        |
+| view3        |
+| view6        |
+| view7        |
++--------------+
+12 rows in set (0.00 sec)
+
+mysql> select*from oil;
++------+------+
+| id   | name |
++------+------+
+|   32 | rfg  |
+|   63 | mnb  |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> altaer table oil add gender varchar(78);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'altaer table oil add gender varchar(78)' at line 1
+mysql> alter table oil add gender varchar(78);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select*from oil;
++------+------+--------+
+| id   | name | gender |
++------+------+--------+
+|   32 | rfg  | NULL   |
+|   63 | mnb  | NULL   |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> alter table oil modify column gender=male where id=32;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=male where id=32' at line 1
+mysql> alter table oil modify column gender = male where id=32;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= male where id=32' at line 1
+mysql> alter table oil modify column gender = 'male' where id=32;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'male' where id=32' at line 1
+mysql> alter table oil modify column gender = 'male' on id=32;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'male' on id=32' at line 1
+mysql> create table student(id int,name varchar(78),gender varchar(78),branch varchar(78));
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> create table stud(id int,name varchar(78),gender varchar(78),branch varchar(78));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into stud values(1,'pothuraju','male','banglore'),(2,'sita','female','cse');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into stud values(8,'ravana','male','ece'),(5,'divya','female','cse');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into stud values(65,'hari','male','ece'),(41,'janu','female','mech');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from stud;
++------+-----------+--------+----------+
+| id   | name      | gender | branch   |
++------+-----------+--------+----------+
+|    1 | pothuraju | male   | banglore |
+|    2 | sita      | female | cse      |
+|    8 | ravana    | male   | ece      |
+|    5 | divya     | female | cse      |
+|   65 | hari      | male   | ece      |
+|   41 | janu      | female | mech     |
++------+-----------+--------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select branch,count(id) from stud group by branch;
++----------+-----------+
+| branch   | count(id) |
++----------+-----------+
+| banglore |         1 |
+| cse      |         2 |
+| ece      |         2 |
+| mech     |         1 |
++----------+-----------+
+4 rows in set (0.03 sec)
+
+mysql> select gender,count(id) from stud group by gender;
++--------+-----------+
+| gender | count(id) |
++--------+-----------+
+| male   |         3 |
+| female |         3 |
++--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select gender,avg(id) from stud group by gender;
++--------+---------+
+| gender | avg(id) |
++--------+---------+
+| male   | 24.6667 |
+| female | 16.0000 |
++--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select gender,max(id) from stud group by gender;
++--------+---------+
+| gender | max(id) |
++--------+---------+
+| male   |      65 |
+| female |      41 |
++--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select gender,min(id) from stud group by gender;
++--------+---------+
+| gender | min(id) |
++--------+---------+
+| male   |       1 |
+| female |       2 |
++--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select branch,min(id) from stud group by branch;
++----------+---------+
+| branch   | min(id) |
++----------+---------+
+| banglore |       1 |
+| cse      |       2 |
+| ece      |       8 |
+| mech     |      41 |
++----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select branch,max(id) from stud group by branch;
++----------+---------+
+| branch   | max(id) |
++----------+---------+
+| banglore |       1 |
+| cse      |       5 |
+| ece      |      65 |
+| mech     |      41 |
++----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select branch,avg(id) from stud group by branch;
++----------+---------+
+| branch   | avg(id) |
++----------+---------+
+| banglore |  1.0000 |
+| cse      |  3.5000 |
+| ece      | 36.5000 |
+| mech     | 41.0000 |
++----------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select branch,count(branch) from stud group by branch having count(id)=1;
++----------+---------------+
+| branch   | count(branch) |
++----------+---------------+
+| banglore |             1 |
+| mech     |             1 |
++----------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select branch,count(branch) from stud group by branch having count(id)>1;
++--------+---------------+
+| branch | count(branch) |
++--------+---------------+
+| cse    |             2 |
+| ece    |             2 |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select branch,count(branch) from stud group by branch having count(id)<1;
+Empty set (0.00 sec)
+
+mysql> select branch,max(id) from stud group by branch having count(id)>50;
+Empty set (0.00 sec)
+
+mysql> select branch,min(id) from stud group by branch having count(id)>50;
+Empty set (0.00 sec)
+
+mysql> select branch,count(branch) from stud group by branch having count(id)>50;
+Empty set (0.00 sec)
+
+mysql> alter table stud add salary int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into stud values(85,'ramudu','male','aids',6985),(65,'siva','male','aiml',4125);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into stud values(72,'ganesh','male','aids',6925),(46,'kanth','male','aiml',415);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from stud;
++------+-----------+--------+----------+--------+
+| id   | name      | gender | branch   | salary |
++------+-----------+--------+----------+--------+
+|    1 | pothuraju | male   | banglore |   NULL |
+|    2 | sita      | female | cse      |   NULL |
+|    8 | ravana    | male   | ece      |   NULL |
+|    5 | divya     | female | cse      |   NULL |
+|   65 | hari      | male   | ece      |   NULL |
+|   41 | janu      | female | mech     |   NULL |
+|   85 | ramudu    | male   | aids     |   6985 |
+|   65 | siva      | male   | aiml     |   4125 |
+|   72 | ganesh    | male   | aids     |   6925 |
+|   46 | kanth     | male   | aiml     |    415 |
++------+-----------+--------+----------+--------+
+10 rows in set (0.00 sec)
